@@ -7,7 +7,9 @@
     <title>The Band</title>
 
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/reponsive.css">
     <link rel="stylesheet" href="./assets/themify-icons/themify-icons.css">
+
 </head>
 
 <body>
@@ -40,6 +42,12 @@
                 <i class="search-icon ti-search"></i>
             </div>
             <!-- end search button -->
+
+            <!-- menu button -->
+            <div id="mobile-menu" class="mobile-menu-btn">
+                <i class="mobile-menu-icon ti-menu"></i>
+            </div>
+            <!-- end menu button -->
 
         </div>
         <!-- end header-->
@@ -77,15 +85,15 @@
                     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
                 <div class="member-list">
-                    <div class="member-item">
+                    <div class="member-item mem">
                         <p class="member-name">Name</p>
                         <img src="./assets/img/content/about section/member1.jpg" alt="" class="member-avatar">
                     </div>
-                    <div class="member-item">
+                    <div class="member-item mem">
                         <p class="member-name">Name</p>
                         <img src="./assets/img/content/about section/member1.jpg" alt="" class="member-avatar">
                     </div>
-                    <div class="member-item">
+                    <div class="member-item mem">
                         <p class="member-name">Name</p>
                         <img src="./assets/img/content/about section/member1.jpg" alt="" class="member-avatar">
                     </div>
@@ -150,7 +158,7 @@
 
 
             <!-- contact section -->
-            <div class="content-section" style="margin-bottom: 200px;" id="contact">
+            <div class="content-section" style="margin-bottom: 300px;" id="contact">
                 <h2 class="section-heading">CONTACT</h2>
                 <p class="section-sub-heading">Fan? Drop a note!</p>
                 
@@ -167,7 +175,7 @@
                                 <div class="col col-half">
                                     <input type="text" name="" placeholder="Name" id="" required class="form-control">
                                 </div>
-                                <div class="col col-half">
+                                <div class="col col-half s-mt-8">
                                     <input type="email" name="" placeholder="Email" id="" required class="form-control">
                                 </div>
                             </div>
@@ -179,7 +187,7 @@
                                 </div>
                             </div>
 
-                            <input type="submit" value="SEND" class="mt-16 form-submit">
+                            <input type="submit" value="SEND" class="mt-16 form-submit s-full-width">
                         </form>
                     </div>
                 </div>
@@ -275,6 +283,44 @@
         modalContainer.addEventListener('click', function(event){
             event.stopPropagation()
         })
+
+
+        var header = document.getElementById('header');
+        var mobileMenu = document.getElementById('mobile-menu');
+        var headerHeight = header.clientHeight;
+        console.log(header);
+        console.log(mobileMenu);
+        
+        // mobile-menu
+        mobileMenu.onclick = function() {
+            var isClose = header.clientHeight === headerHeight;
+            if (isClose) {
+                header.style.height = 'auto';
+            } else{
+                header.style.height = null;
+            }
+        }
+
+        // tự động đống khi chọn menu
+        var menuItems = document.querySelectorAll('#nav li a[href*="#"]');
+        //console.log(menuItems);
+        for (var i=0; i < menuItems.length; i++) {
+            var menuItem = menuItems[i];
+            //console.log(menuItem);
+
+            console.log(menuItem.nextElementSibling)
+
+            menuItem.onclick = function() {
+                //console.log(this)
+                var isParentMenu = this.nextElementSibling && this.nextElementSibling.classList.contains('subnav');
+                // neu co anh chi em lien ke va anh chi em lien ke do chua subnav thi ta biet do chinh la class menu cha
+                if (!isParentMenu) {
+                    header.style.height = null;
+                } else {
+                    event.preventDefault();
+                }
+            }
+        }
     </script>
 </body>
 </html>
